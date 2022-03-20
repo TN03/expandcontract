@@ -143,7 +143,7 @@ function expand()
         $t .= '
 <div class="deepLink"><a href="' . $linkU . '#popup' . $value.$unikId . '" onclick="return false;">&#x1f517;</a></div>';
         if ($limitheight) $t .= '
-<div style="height:'.$limitheight.';overflow-y:scroll;">';
+<div style="height:'.$limitheight.';overflow-y:auto;">';
         $t .= $expContent;
         $t .= '<div style="clear:both"></div>';
         if ($limitheight) $t .= '
