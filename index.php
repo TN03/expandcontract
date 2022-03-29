@@ -21,7 +21,7 @@ if (!defined('CMSIMPLE_XH_VERSION')) {
 //function expand($link='',$linktext='',$closebutton='',$limitheight='',$usebuttons='',$firstopen='')
 function expand()
 {
-    global $s, $cl, $l, $cf, $h, $hjs, $c, $u, $plugin_cf, $plugin_tx, $pth, $bjs;
+    global $s, $sn, $cl, $l, $cf, $h, $hjs, $c, $u, $plugin_cf, $plugin_tx, $pth, $bjs;
     $ec_pcf = $plugin_cf['expandcontract'];
     static $count = 1;
     static $nested = false;
@@ -323,6 +323,7 @@ function expand()
         if ($limitheight) $t .= '
 <div style="height:'.$limitheight.';overflow-y:auto;padding-right:1em;">';
         $t .= $expContent;
+        $t .= '<a href="' . $sn. '?' . $u[$value] . '&amp;ec_preview=' . $linkU . '&amp;ec_hash=popup' . $i.$uniqueId . '&amp;edit">Bearbeiten</a>';
         $t .= '<div style="clear:both"></div>';
         if ($limitheight) $t .= '
 </div>';
@@ -422,4 +423,17 @@ function ec_lowercase($words = '', $data = '') {
         $data = str_ireplace($tmp, $tmp, $data);
     }
     return $data;
+}
+
+if (XH_ADM && $edit && isset($_GET['ec_preview']) && isset($_GET['ec_hash'])) {
+    $_SESSION['ec']['previewpage'] = $_GET['ec_preview'];
+    $_SESSION['ec']['hash'] = $_GET['ec_hash'];
+    $_SESSION['ec']['editpage'] = $sn . '?' . $su;
+    var_dump($_SESSION['ec']);
+}
+
+if (XH_ADM && $edit && isset($_SESSION['ec'])) {
+    if ($_SESSION['ec']['editpage'] === $sn . '?' . $su) {
+        $o = '<a href="' . $_SESSION['ec']['previewpage'] . '&amp;normal#' . $_SESSION['ec']['hash'] . '">Im Akkordeon anschauen</a>' . $o;
+    }
 }
